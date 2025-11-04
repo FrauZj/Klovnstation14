@@ -57,6 +57,10 @@
     fireCost: 62.5
   - type: StaticPrice
     price: 420
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
 
 - type: entity
   id: BaseWeaponPowerCell
@@ -473,6 +477,10 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
 
 - type: entity
   name: practice disabler
@@ -911,6 +919,10 @@
     startingCharge: 1000
   - type: StaticPrice
     price: 100
+  - type: CursorOffsetRequiresWield
+  - type: EyeCursorOffset
+    maxOffset: 2
+    pvsIncrease: 0.2
 
 - type: entity
   name: xenoborg laser gun
