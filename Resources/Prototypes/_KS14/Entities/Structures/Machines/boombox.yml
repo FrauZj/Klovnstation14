@@ -4,8 +4,8 @@
 # SPDX-License-Identifier: MPL-2.0
 
 - type: entity
-  id: Boombox
   parent: BaseItem
+  id: Boombox
   name: boombox
   description: A handheld machine capable of playing a wide variety of tunes. Enjoyment not guaranteed.
   components:
@@ -18,7 +18,7 @@
     selectState: select
   - type: Item
     size: Normal
-    sprite: _KS14/Objects/Fun/Instruments/boombox.rsi
+    sprite: _KS14/Objects/Fun/boombox.rsi
   - type: StaticPrice
     price: 200
   - type: ActivatableUI
