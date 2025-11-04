@@ -33,3 +33,9 @@ Entries:
       message: Slip combat is real again and soap/peels are no longer useless.
   id: 4
   time: '2025-10-29T16:04:11.0000000+00:00'
+- author: DeusMaldPr
+  changes:
+    - type: Remove
+      message: Removed species that weren't human and their guidebooks
+  id: 5
+  time: '2025-11-04T16:39:16.0000000+00:00'
