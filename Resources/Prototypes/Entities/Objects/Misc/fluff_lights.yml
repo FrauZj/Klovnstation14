@@ -43,7 +43,7 @@
   - type: PointLight
     enabled: false
     radius: 3
-    energy: 2
+    energy: 1.4 #klovn, was 2
     netsync: false
   - type: ToggleableVisuals
     spriteLayer: light
@@ -218,7 +218,7 @@
   - type: PointLight
     enabled: false
     radius: 8
-    energy: 5
+    energy: 4 #klovn, was 5
   - type: ItemSlots
     slots:
       cell_slot:
