@@ -61,3 +61,11 @@ Entries:
         o algo.
   id: 6
   time: '2025-11-04T17:50:31.0000000+00:00'
+- author: nabegator220
+  changes:
+    - type: Tweak
+      message: >-
+        Zoom changes. Most rifles now let you see further when wielded, and the
+        default field of view has been made smaller.
+  id: 7
+  time: '2025-11-04T20:30:07.0000000+00:00'
