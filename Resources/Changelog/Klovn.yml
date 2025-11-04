@@ -39,3 +39,25 @@ Entries:
       message: Removed species that weren't human and their guidebooks
   id: 5
   time: '2025-11-04T16:39:16.0000000+00:00'
+- author: FrauZj
+  changes:
+    - type: Add
+      message: Added double esword to uplink
+    - type: Add
+      message: Added eshield, jugsuit, elite hardsuit to syndie uplink
+    - type: Add
+      message: >-
+        Added cheaper versions of zed bundle and medical bundle to syndie
+        uplink. The latter only available to med.
+    - type: Tweak
+      message: Made most of super rare discounts happen much more often
+    - type: Tweak
+      message: 'More useful stuff now appears in the surplus. '
+    - type: Tweak
+      message: Estoc and Hristov no longer have slowdowns.
+    - type: Tweak
+      message: >-
+        Most of the rarely bought stuff by syndies is now cheaper, microbalance
+        o algo.
+  id: 6
+  time: '2025-11-04T17:50:31.0000000+00:00'

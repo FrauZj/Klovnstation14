@@ -37,6 +37,13 @@
 # SPDX-FileCopyrightText: 2025 SlamBamActionman
 # SPDX-FileCopyrightText: 2025 lzk
 # SPDX-FileCopyrightText: 2025 nabegator220
+# SPDX-FileCopyrightText: 2025 FrauZj
+# SPDX-FileCopyrightText: 2025 FrauzJ
+# SPDX-FileCopyrightText: 2025 Nox
+# SPDX-FileCopyrightText: 2025 RedBookcase
+# SPDX-FileCopyrightText: 2025 SlamBamActionman
+# SPDX-FileCopyrightText: 2025 github_actions[bot]
+# SPDX-FileCopyrightText: 2025 lzk
 #
 # SPDX-License-Identifier: MPL-2.0
 
@@ -163,16 +170,16 @@
       - CartridgeAntiMateriel
     capacity: 5
     proto: CartridgeAntiMateriel
-  - type: SpeedModifiedOnWield
-    walkModifier: 0.25
-    sprintModifier: 0.25
+  # - type: SpeedModifiedOnWield
+  #   walkModifier: 0.25
+  #   sprintModifier: 0.25
   - type: CursorOffsetRequiresWield
   - type: EyeCursorOffset
     maxOffset: 4
     pvsIncrease: 0.4
   - type: StaticPrice
     price: 3500
-
+  # KS14 change, removed speed debuff for wielding Hristov
 - type: entity
   name: musket
   parent: [ BaseWeaponSniper, BaseGunWieldable, BaseMajorContraband ]
