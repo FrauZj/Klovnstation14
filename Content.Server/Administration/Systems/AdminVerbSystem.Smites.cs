@@ -95,7 +95,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly SlipperySystem _slipperySystem = default!;
 
     private readonly EntProtoId _actionViewLawsProtoId = "ActionViewLaws";
-
     private readonly ProtoId<SiliconLawsetPrototype> _crewsimovLawset = "Crewsimov";
 
     private readonly EntProtoId _siliconMindRole = "MindRoleSiliconBrain";
