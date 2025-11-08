@@ -5,8 +5,6 @@
   lawString: laws-aiobey
 
 # Crewsimov
-
-# Crewsimov
 - type: siliconLaw
   id: Crewsimov1
   order: 1
