@@ -17,6 +17,8 @@
   components:
   - type: Action
     useDelay: 10
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/ethereal_runeplaced.ogg
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: FlashRune
@@ -29,6 +31,8 @@
   components:
   - type: Action
     useDelay: 20
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/ethereal_runeplaced.ogg
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: ExplosionRune
@@ -41,6 +45,8 @@
   components:
   - type: Action
     useDelay: 15
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/ethereal_runeplaced.ogg
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: IgniteRune
@@ -53,6 +59,8 @@
   components:
   - type: Action
     useDelay: 10
+    sound: !type:SoundPathSpecifier
+      path: /Audio/Magic/ethereal_runeplaced.ogg
   - type: InstantAction
     event: !type:InstantSpawnSpellEvent
       prototype: StunRune
