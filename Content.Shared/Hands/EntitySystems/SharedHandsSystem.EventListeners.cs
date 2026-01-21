@@ -35,11 +35,9 @@ public abstract partial class SharedHandsSystem
         var freeHands = CountFreeHands(ent.AsNullable());
         var totalHands = GetHandCount(ent.AsNullable());
 
-        // Can't crawl around without any hands.
+        // Can't crawl around without any hands; KS14 says nophono cares
         // Entities without the HandsComponent will always have full crawling speed.
-        if (totalHands == 0)
-            args.SpeedModifier = 0f;
-        else
-            args.SpeedModifier *= (float)freeHands / totalHands;
+        if (freeHands == 0)
+            args.SpeedModifier *= .5f;
     }
 }

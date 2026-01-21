@@ -154,6 +154,8 @@
       state: riot_laser-icon
     - type: Item
       heldPrefix: riot_laser
+    - type: DisarmMalus
+      malus: 0.6
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -174,6 +176,8 @@
       state: riot_bullet-icon
     - type: Item
       heldPrefix: riot_bullet
+    - type: DisarmMalus
+      malus: 0.6
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -196,6 +200,8 @@
       state: buckler-icon
     - type: Item
       heldPrefix: buckler
+    - type: DisarmMalus
+      malus: 0.5
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -251,6 +257,8 @@
       state: cardshield-icon
     - type: Item
       heldPrefix: cardshield
+    - type: DisarmMalus
+      malus: 0.3
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -303,6 +311,8 @@
       state: makeshift-icon
     - type: Item
       heldPrefix: metal
+    - type: DisarmMalus
+      malus: 0.5
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -359,6 +369,8 @@
     - type: Item
       sprite: Objects/Weapons/Melee/web-shield.rsi
       heldPrefix: icon
+    - type: DisarmMalus
+      malus: 0.3
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -412,6 +424,8 @@
       state: ratvarian-icon
     - type: Item
       heldPrefix: ratvarian
+    - type: DisarmMalus
+      malus: 0.6
     - type: Blocking
       passiveBlockModifier:
         coefficients:
@@ -441,6 +455,8 @@
       state: mirror-icon
     - type: Item
       heldPrefix: mirror
+    - type: DisarmMalus
+      malus: 0.6
     - type: Reflect
       reflectProb: 0.95
       reflects:
@@ -621,6 +637,8 @@
         malus: 0.6
     - type: ItemToggleSize
       activatedSize: Huge
+    - type: DisarmMalus
+      malus: 0.6
     - type: Sprite
       sprite: Objects/Weapons/Melee/teleriot_shield.rsi
       layers:
