@@ -1,0 +1,11 @@
+- type: entity
+  id: IgniterWeldingFuelTank
+  parent: WeldingFuelTank
+  suffix: Full
+  components:
+  - type: DeviceLinkSink
+    ports:
+    - Trigger
+  - type: TriggerOnSignal
+  - type: ExplodeOnTrigger
+

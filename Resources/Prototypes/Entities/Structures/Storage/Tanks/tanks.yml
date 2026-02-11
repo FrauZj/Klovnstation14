@@ -7,6 +7,9 @@
   description: A fuel tank. It's used to store high amounts of fuel.
   suffix: Empty
   components:
+  - type: Transform
+    anchored: true
+    noRot: false
   - type: StaticPrice
     price: 750
   - type: Sprite
@@ -33,6 +36,9 @@
   - type: Explosive
     explosionType: Default
     totalIntensity: 60 # Mediocre explosion. Not enough to do any meaningful structural damage to anything other then windows, provided you're only using one tank.
+  - type: Construction
+    graph: IgnitionWeldingFuelTank
+    node: ignitionWeldingFuelTank
 
 - type: entity
   id: WeldingFuelTankFull

@@ -1,0 +1,21 @@
+- type: constructionGraph
+  id: IgnitionWeldingFuelTank
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ignitionWeldingFuelTank
+      steps:
+      - tag: WeldingFuelTank
+        name: construction-graph-tag-welding-fuel-tank
+        icon:
+          sprite: Structures/Storage/tanks.rsi
+          state: welding-fuel-tank
+      - tag: Igniter
+        name: construction-graph-tag-igniter
+        icon:
+          sprite: Objects/Devices/igniter.rsi
+          state: igniter
+        doAfter: 4
+  - node: ignitionWeldingFuelTank
+    entity: IgniterWeldingFuelTank
