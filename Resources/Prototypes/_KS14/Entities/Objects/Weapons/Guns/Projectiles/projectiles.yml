@@ -1,8 +1,10 @@
 - type: entity
-  id: ButcherHook
-  name: ButcherHook
+  id: ButchersHookProjectile
+  name: butcher's hook
   categories: [ HideSpawnMenu ]
   components:
+    - type: EmbeddableProjectile
+      deleteOnRemove: true
     - type: InteractionOutline
     - type: Sprite
       noRot: false
@@ -14,10 +16,10 @@
     - type: TileFrictionModifier
       modifier: 0
     - type: Projectile
-      deleteOnCollide: true
+      deleteOnCollide: false
       damage:
         types:
-          Slash: 25
+          Slash: 12
     - type: Fixtures
       fixtures:
         projectile:
@@ -26,6 +28,5 @@
             bounds: "-0.1,-0.1,0.1,0.1"
           hard: false
           mask:
-            - Impassable
-            - HighImpassable
-    - type: GrapplingProjectile
+            - MobLayer
+    - type: ButchersHookProjectile

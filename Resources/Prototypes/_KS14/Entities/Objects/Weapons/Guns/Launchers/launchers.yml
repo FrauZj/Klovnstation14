@@ -1,7 +1,7 @@
 - type: entity
-  name: grappling gun
-  parent: WeaponGrapplingGun
-  id: WeaponButcherHook
+  name: butcher's hook
+  parent: BaseItem
+  id: WeaponButchersHook
   components:
     - type: Item
       size: Small
@@ -9,15 +9,13 @@
       - 0,0,1,0
       - 0,1,0,1
       storedOffset: 0,-6
-    - type: AmmoCounter
-    - type: GrapplingGun
-    - type: BlockShootingInSpeczone # KS14: Speczones
+    - type: ButchersHook
     - type: Gun
       soundGunshot: /Audio/Weapons/Guns/Gunshots/harpoon.ogg
       fireRate: 0.5
       clumsyProof: true
     - type: BasicEntityAmmoProvider
-      proto: ButcherHook
+      proto: ButchersHookProjectile
       capacity: 1
     - type: Sprite
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
