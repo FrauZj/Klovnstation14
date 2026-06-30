@@ -8,14 +8,25 @@ namespace Content.Shared.Weapons.Misc;
 public sealed partial class ButchersHookComponent : Component
 {
     /// <summary>
-    /// Hook's reeling speed when there's no resistance.
+    /// Hook's reeling speed when there's no resistance (manual reeling).
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float ReelRate = 2.5f;
+    public float ReelRate = 1f;
 
     /// <summary>
-    /// Amount of force to use while reeling. This is made extremely small when compensating for frametime
-    /// Don't be afraid to use large numbers, but do beware that this becomes fast as fuck in frictionless conditions such as space
+    /// Auto-reel speed - much faster than manual reeling.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float AutoReelSpeed = 6f;  // 6x faster than manual
+
+    /// <summary>
+    /// Force multiplier for auto-reel - makes it pull harder.
+    /// </summary>
+    [DataField, AutoNetworkedField]
+    public float AutoReelForceMultiplier = 1f;
+
+    /// <summary>
+    /// Amount of force to use while reeling.
     /// </summary>
     [DataField, AutoNetworkedField]
     public float ReelForce = 4000f;
@@ -33,20 +44,21 @@ public sealed partial class ButchersHookComponent : Component
     public float RopeMargin = 0.2f;
 
     /// <summary>
-    /// Margin from the min length for the rope to be considered fully reeled-in, preventing it from being reeled in further
+    /// Margin from the min length for the rope to be considered fully reeled-in.
+    /// Lowered to bring target closer.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float RopeFullyReeledMargin = 0.22f;
+    public float RopeFullyReeledMargin = 0.1f;  // Reduced from 0.22 to bring target closer
 
     /// <summary>
-    /// Minimum length for the butcher's hook's rope
+    /// Minimum length for the butcher's hook's rope.
+    /// Reduced to bring target right next to attacker.
     /// </summary>
     [DataField, AutoNetworkedField]
-    public float RopeMinLength = 1f;
+    public float RopeMinLength = 0.2f;  // Reduced from 1.0 to bring target closer
 
     /// <summary>
     /// Maximum length the hook can actually be.
-    /// If this is too large, then the rope gets culled out of PVS, causing issues
     /// </summary>
     [DataField, AutoNetworkedField]
     public float? RopeMaxLength;
