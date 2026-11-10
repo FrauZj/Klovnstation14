@@ -1,3 +1,4 @@
+using Content.Shared._KS14.Klovnmed.OrganHealth; // KS14
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner;
@@ -28,6 +29,7 @@ public struct HealthAnalyzerUiState
     public bool? ScanMode;
     public bool? Bleeding;
     public bool? Unrevivable;
+    public List<KsOrganHealthEntry>? Organs; // KS14: Klovnmed organ health, the organs that aren't healthy
 
     public HealthAnalyzerUiState() { }
 

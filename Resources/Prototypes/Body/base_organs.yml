@@ -263,7 +263,7 @@
       - RFoot
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthBrain, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthBrain to parents
   id: OrganBaseBrain
   name: brain
   abstract: true
@@ -289,7 +289,7 @@
       Taco: Brain
 
 - type: entity
-  parent: OrganBase
+  parent: [ KsBaseOrganHealthEyes, OrganBase ] # KS14: Added KsBaseOrganHealthEyes to parents
   id: OrganBaseEyes
   name: eyes
   abstract: true
@@ -312,7 +312,7 @@
       - Eyes
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthTongue, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthTongue to parents
   id: OrganBaseTongue
   name: tongue
   abstract: true
@@ -325,7 +325,7 @@
     - state: tongue
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthAppendix, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthAppendix to parents
   id: OrganBaseAppendix
   name: appendix
   abstract: true
@@ -338,7 +338,7 @@
     - state: appendix
 
 - type: entity
-  parent: OrganBase
+  parent: [ KsBaseOrganHealthEars, OrganBase ] # KS14: Added KsBaseOrganHealthEars to parents
   id: OrganBaseEars
   name: ears
   abstract: true
@@ -351,7 +351,7 @@
     - state: ears
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthLungs, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthLungs to parents
   id: OrganBaseLungs
   name: lungs
   abstract: true
@@ -385,7 +385,7 @@
       canReact: false
 
 - type: entity
-  parent: OrganBase
+  parent: [ KsBaseOrganHealthHeart, OrganBase ] # KS14: Added KsBaseOrganHealthHeart to parents
   id: OrganBaseHeart
   name: heart
   abstract: true
@@ -401,7 +401,7 @@
     stages: [ Bloodstream ]
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthStomach, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthStomach to parents
   id: OrganBaseStomach
   name: stomach
   abstract: true
@@ -433,7 +433,7 @@
       maxVol: 150 # 1.25 liters which is average for a human
 
 - type: entity
-  parent: [ KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy to parents
+  parent: [ KsBaseOrganHealthLiver, KsBaseOrganSquishy, OrganBase ] # KS14: Added KsBaseOrganSquishy and KsBaseOrganHealthLiver to parents
   id: OrganBaseLiver
   name: liver
   abstract: true

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared._KS14.Klovnmed.OrganHealth; // KS14
 using Content.Shared.Body.Events;
 using Content.Shared.Body;
 using Content.Shared.Chemistry.Components;
@@ -170,6 +171,14 @@ public sealed partial class MetabolizerSystem : EntitySystem
                 {
                     solution.RemoveReagent(reagent, mostToTransfer);
                     transferSolution.AddReagent(reagent, mostToTransfer * solutionData.TransferEfficacy);
+
+                    // KS14 Start: Klovnmed organ health. What the stomach passes on goes through the liver first.
+                    if (ent.Comp2?.Body is { } transferBody)
+                    {
+                        var transferEv = new KsReagentTransferredEvent(stage, proto, mostToTransfer);
+                        RaiseLocalEvent(transferBody, ref transferEv);
+                    }
+                    // KS14 End
                 }
                 else
                 {
@@ -199,6 +208,21 @@ public sealed partial class MetabolizerSystem : EntitySystem
                 continue;
 
             var actualEntity = ent.Comp2?.Body ?? solutionOwner.Value;
+
+            // KS14 Start: Klovnmed organ health. A failed organ, or one missing an organ it needs, freezes reagents, and
+            //     a working liver filters out small amounts of toxin.
+            var organEv = new KsMetabolizeReagentAttemptEvent(actualEntity, proto);
+            RaiseLocalEvent(ent, ref organEv);
+
+            if (organEv.Outcome == KsMetabolizeReagentOutcome.Freeze)
+                continue;
+
+            if (organEv.Outcome == KsMetabolizeReagentOutcome.Filter)
+            {
+                solution.RemoveReagent(reagent, mostToRemove);
+                continue;
+            }
+            // KS14 End
 
             // do all effects, if conditions apply
             foreach (var effect in entry.Effects)

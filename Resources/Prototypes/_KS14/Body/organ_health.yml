@@ -1,0 +1,351 @@
+# Organ health: every internal organ tgstation has can be damaged, heals on its own while only lightly damaged, and
+#     fails at its max health. See KsOrganHealthSystem, and the organ-health skill for porting more. Numbers are tg's
+#     (code/modules/surgery/organs), per second where tg ticks every 2. Defaults are tg's standard organ: 100 health,
+#     thresholds at 10 and 45, healing 0.05 a second. Kidneys are left out, since tg has none.
+- type: entity
+  id: KsBaseOrganHealth
+  abstract: true
+  components:
+  - type: KsOrganHealth
+
+# tg: internal/heart/_heart.dm. A failed heart stops: cardiac arrest. What it metabolizes has been through the liver, so
+#     without a working one only self-consuming reagents do anything.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthHeart
+  abstract: true
+  components:
+  - type: KsMetabolismRequiresOrgans
+    organs: [ Liver ]
+  - type: KsOrganHealth
+    lowThresholdPassed: ks-organ-heart-low
+    highThresholdPassed: ks-organ-heart-high
+    nowFixed: ks-organ-heart-fixed
+    highThresholdCleared: ks-organ-heart-high-cleared
+    failureStages:
+    - time: 0
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-heart-failure ]
+      - !type:PopupMessage
+        type: Pvs
+        visualType: MediumCaution
+        messages: [ ks-organ-heart-failure-others ]
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Asphyxiation: 4
+            Blunt: 1
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectForcedSleeping
+        time: 8
+        type: Update
+
+# tg: internal/lungs/_lungs.dm. Damaged lungs cough; failed ones can't breathe.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthLungs
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    lowThresholdPassed: ks-organ-lungs-low
+    highThresholdPassed: ks-organ-lungs-high
+    nowFixed: ks-organ-lungs-fixed
+    highThresholdCleared: ks-organ-lungs-high-cleared
+    lowThresholdCleared: ks-organ-lungs-low-cleared
+    symptoms:
+    - minDamage: 10
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        probability: 0.025
+    - minDamage: 45
+      effects:
+      - !type:Emote
+        emote: Cough
+        showInChat: true
+        probability: 0.025
+    failureStages:
+    - time: 0
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Asphyxiation: 1.5
+      - !type:PopupMessage
+        type: Pvs
+        visualType: MediumCaution
+        probability: 0.2
+        messages: [ ks-organ-lungs-failure ]
+
+# tg: internal/stomach/_stomach.dm. A damaged stomach can't hold food down. (tg meant it to; its check never fires.)
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthStomach
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    lowThresholdPassed: ks-organ-stomach-low
+    highThresholdPassed: ks-organ-stomach-high
+    highThresholdCleared: ks-organ-stomach-high-cleared
+    lowThresholdCleared: ks-organ-stomach-low-cleared
+    symptoms:
+    - minDamage: 45
+      effects:
+      - !type:Vomit
+        probability: 0.01
+    failureStages:
+    - time: 0
+      effects:
+      - !type:Vomit
+        probability: 0.03
+      - !type:PopupMessage
+        visualType: MediumCaution
+        probability: 0.05
+        messages: [ ks-organ-stomach-failure ]
+
+# tg: internal/eyes/_eyes.dm. Half the health of other organs; failed eyes are blind.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthEyes
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    maxHealth: 50
+    lowThreshold: 20
+    highThreshold: 30
+    healing: 0.025
+    healingMaxDamage: 30
+    lowThresholdPassed: ks-organ-eyes-low
+    highThresholdPassed: ks-organ-eyes-high
+    nowFailing: ks-organ-eyes-failing
+    nowFixed: ks-organ-eyes-fixed
+    highThresholdCleared: ks-organ-eyes-high-cleared
+    lowThresholdCleared: ks-organ-eyes-low-cleared
+    failureStages:
+    - time: 0
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectBlindness
+        time: 2
+        type: Update
+
+# tg: internal/ears/_ears.dm. Damaged ears ring. Failed ones are deaf in tg, but nothing here can be deaf yet.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthEars
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    lowThresholdPassed: ks-organ-ears-low
+    lowThresholdCleared: ks-organ-ears-low-cleared
+    symptoms:
+    - minDamage: 10
+      effects:
+      - !type:PopupMessage
+        probability: 0.005
+        messages: [ ks-organ-ears-ringing ]
+
+# tg: internal/tongue/_tongue.dm. Never heals on its own; failed, it mumbles.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthTongue
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    healing: 0
+    failureStages:
+    - time: 0
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectSlurred
+        time: 2
+        type: Update
+
+# tg: mob/living/brain/brain_item.dm. Twice the health, never heals on its own, and its failure is death. tg's brain
+#     traumas are stood in for by stuttering when damaged and drowsiness when badly damaged (tg's narcolepsy).
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthBrain
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    maxHealth: 200
+    lowThreshold: 45
+    highThreshold: 120
+    healing: 0
+    lowThresholdPassed: ks-organ-brain-low
+    highThresholdPassed: ks-organ-brain-high
+    nowFailing: ks-organ-brain-failing
+    symptoms:
+    - minDamage: 45
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectStutter
+        time: 10
+        type: Update
+        probability: 0.02
+    - minDamage: 120
+      effects:
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 10
+        type: Update
+        probability: 0.02
+    failureStages:
+    - time: 0
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Asphyxiation: 200
+
+# tg: internal/appendix/_appendix.dm. A failed appendix poisons.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthAppendix
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    nowFailing: ks-organ-appendix-failing
+    nowFixed: ks-organ-appendix-fixed
+    failureStages:
+    - time: 0
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 2
+
+# tg: internal/liver/_liver.dm. Filters toxins (tg's defaults: 3u tolerance, resistance 1, at most 2 damage a second).
+#     A failed liver freezes most reagents, the heart's included, and gets worse every minute. Alcohol damage is on
+#     ethanol, as in tg.
+- type: entity
+  parent: KsBaseOrganHealth
+  id: KsBaseOrganHealthLiver
+  abstract: true
+  components:
+  - type: KsOrganHealth
+    freezeMetabolismWhenFailing: true
+    toxinFilter:
+      painMessage: ks-organ-liver-pain
+    lowThresholdPassed: ks-organ-liver-low
+    highThresholdPassed: ks-organ-liver-high
+    missingEffects:
+    - !type:HealthChange
+      ignoreResistances: true
+      damage:
+        types:
+          Poison: 0.6
+    - !type:KsAdjustOrganDamage
+      randomOrgans: &liverDamagedOrgans [ Heart, Lungs, Stomach, Eyes, Ears ]
+      amount: 0.5
+    failureStages:
+    - time: 0
+      examine: ks-organ-liver-examine-1
+    - time: 60
+      examine: ks-organ-liver-examine-1
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-liver-failure-1 ]
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.2
+    - time: 120
+      examine: ks-organ-liver-examine-1
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-liver-failure-2 ]
+      - !type:Vomit {}
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.4
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 3
+        type: Update
+    - time: 180
+      examine: ks-organ-liver-examine-2
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-liver-failure-3 ]
+      - !type:Vomit {}
+      effects:
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.6
+      - !type:KsAdjustOrganDamage
+        randomOrgans: *liverDamagedOrgans
+        amount: 0.2
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 3
+        type: Update
+      - !type:PopupMessage
+        type: Pvs
+        probability: 0.0075
+        messages: [ ks-organ-liver-drool ]
+    - time: 240
+      examine: ks-organ-liver-examine-3
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-liver-failure-4 ]
+      - !type:Vomit {}
+      - !type:Emote
+        emote: Scream
+        showInChat: true
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectForcedSleeping
+        time: 2.5
+        type: Add
+      effects: &liverFailureLate
+      - !type:HealthChange
+        ignoreResistances: true
+        damage:
+          types:
+            Poison: 0.8
+      - !type:KsAdjustOrganDamage
+        randomOrgans: *liverDamagedOrgans
+        amount: 0.5
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectDrowsiness
+        time: 3
+        type: Update
+      - !type:PopupMessage
+        type: Pvs
+        probability: 0.015
+        messages: [ ks-organ-liver-drool ]
+    - time: 300
+      examine: ks-organ-liver-examine-3
+      start:
+      - !type:PopupMessage
+        visualType: LargeCaution
+        messages: [ ks-organ-liver-failure-5 ]
+      - !type:Vomit {}
+      - !type:Emote
+        emote: Scream
+        showInChat: true
+      - !type:ModifyStatusEffect
+        effectProto: StatusEffectForcedSleeping
+        time: 5
+        type: Add
+      effects: *liverFailureLate

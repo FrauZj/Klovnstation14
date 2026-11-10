@@ -1,0 +1,351 @@
+# How existing reagents treat organs: see KsOrganHealthSystem, and the organ-health skill for the rules they follow.
+
+# Toxins (tg's /datum/reagent/toxin). Up to 3u of each (blood plus stomach) is filtered out by a working liver before it
+#     does anything; more damages the liver at (units / 15) * power a second. Powers are tgstation's toxpwr for the
+#     closest tg toxin, and otherwise 1.5 for every 4 Poison a second (tg toxin against our Toxin).
+- type: !PartialOnly reagent
+  id: Toxin
+  ksToxin: { power: 1.5 }
+
+- type: !PartialOnly reagent
+  id: Amatoxin
+  ksToxin: { power: 2.5 }
+
+- type: !PartialOnly reagent
+  id: CarpoToxin
+  ksToxin: { power: 1 }
+
+- type: !PartialOnly reagent
+  id: Mold
+  ksToxin: { power: 1, damageMultiplier: 0.7 } # tg spore
+
+- type: !PartialOnly reagent
+  id: GastroToxin
+  ksToxin: { power: 0.5 } # tg bad_food
+
+- type: !PartialOnly reagent
+  id: VentCrud
+  ksToxin: { power: 0.5 }
+
+- type: !PartialOnly reagent
+  id: UncookedAnimalProteins
+  ksToxin: { power: 0.5 }
+
+- type: !PartialOnly reagent
+  id: Plasma
+  ksToxin: { power: 3 }
+
+- type: !PartialOnly reagent
+  id: Lipolicide
+  ksToxin: { power: 0.75 }
+
+- type: !PartialOnly reagent
+  id: Mechanotoxin
+  ksToxin: { power: 0.6 }
+
+# Filtered under the tolerance, but no harder on the liver than that.
+- type: !PartialOnly reagent
+  id: Lexorin
+  ksToxin: { power: 0 }
+
+- type: !PartialOnly reagent
+  id: HeartbreakerToxin
+  ksToxin: { power: 0 }
+
+- type: !PartialOnly reagent
+  id: ChloralHydrate
+  ksToxin: { power: 0 }
+
+- type: !PartialOnly reagent
+  id: Histamine
+  ksToxin: { power: 0 }
+
+# Acids eat through whatever they are in, working organs or not (tg: self_consuming).
+- type: !PartialOnly reagent
+  id: SulfuricAcid
+  ksToxin: { power: 1 }
+  ksSelfConsuming: true
+
+- type: !PartialOnly reagent
+  id: FerrochromicAcid
+  ksToxin: { power: 1 }
+  ksSelfConsuming: true
+
+- type: !PartialOnly reagent
+  id: FluorosulfuricAcid
+  ksToxin: { power: 2 }
+  ksSelfConsuming: true
+
+- type: !PartialOnly reagent
+  id: PolytrinicAcid
+  ksToxin: { power: 3 }
+  ksSelfConsuming: true
+
+# tg's alcohol damage, from ethanol's on_mob_life: sqrt(units) * boozepwr ** 1.6 * alcohol_tolerance / 150 a second,
+#     with ethanol's boozepwr of 65, is 0.0265 a second for each root unit the liver is working on. In steps here, and
+#     none for dwarves, whose livers already shrug off most of ethanol's poison.
+- type: !PartialOnly reagent
+  id: Ethanol
+  metabolisms:
+    Metabolites:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: 0.04
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 2
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: 0.04
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 9
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: 0.05
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 25
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: 0.06
+        conditions:
+        - !type:ReagentCondition
+          reagent: Ethanol
+          min: 50
+        - !type:MetabolizerTypeCondition
+          type: [ Dwarf ]
+          inverted: true
+
+# tg silibinin: 3 liver healed per unit. Like most reagents it does nothing once the liver has failed.
+- type: !PartialOnly reagent
+  id: Stellibinin
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: -1.5
+
+# Cryo is what brings back a failed organ, so it works without one. Liver and stomach can't be replaced by surgery.
+- type: !PartialOnly reagent
+  id: Cryoxadone
+  ksSelfConsuming: true
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        amount: -1
+        conditions:
+        - !type:TemperatureCondition
+          max: 213.0
+
+- type: !PartialOnly reagent
+  id: Doxarubixadone # cryo pods use it alongside cryoxadone
+  ksSelfConsuming: true
+
+# Swallowed, bicaridine goes through the liver on its way to the blood and costs it a little. Injected, it never touches
+#     it. Ours, not tg's: tg's cost of a cheap brute medicine is libital's, which is in medicine.yml.
+- type: !PartialOnly reagent
+  id: Bicaridine
+  ksIngestedOrganDamage:
+    Liver: 1
+
+# tg antihol: clears ethanol out of the liver, not just the drunkenness.
+- type: !PartialOnly reagent
+  id: Ethylredoxrazine
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustMetabolite
+        reagent: Ethanol
+        amount: -4
+
+# Like tg syriniver's overdose.
+- type: !PartialOnly reagent
+  id: Dylovene
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: 0.75
+        conditions:
+        - !type:ReagentCondition
+          reagent: Dylovene
+          min: 20
+
+# tg water heals a damaged liver, very slowly.
+- type: !PartialOnly reagent
+  id: Water
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Liver
+        amount: -0.025
+
+# Organ medicine and organ damage from tgstation, onto our closest reagents. Where our metabolism rate differs a lot
+#     from tg's, the amount per unit is kept rather than per second.
+
+# tg mannitol: heals the brain, which never heals on its own. At tg's rate, 5 a unit.
+- type: !PartialOnly reagent
+  id: Mannitol
+  metabolisms:
+    Bloodstream:
+      metabolismRate: 0.2
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: -1
+
+# tg neurine heals a dead brain. Ours works on the cold dead already, so a brain-dead patient can be brought back.
+- type: !PartialOnly reagent
+  id: Opporozidone
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: -1
+        conditions:
+        - !type:TemperatureCondition
+          max: 150.0
+        - !type:MobStateCondition
+          mobstate: Dead
+
+# tg oculine: heals the eyes; 30u is an overdose that hurts them.
+- type: !PartialOnly reagent
+  id: Oculine
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Eyes
+        amount: -1
+      - !type:KsAdjustOrganDamage
+        organ: Eyes
+        amount: 0.75
+        conditions:
+        - !type:ReagentCondition
+          reagent: Oculine
+          min: 30
+
+# tg polypyrylium oligomers: heals the lungs, 2.5 a unit; an overdose hurts them.
+- type: !PartialOnly reagent
+  id: PolypyryliumOligomers
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Lungs
+        amount: -1.25
+      - !type:KsAdjustOrganDamage
+        organ: Lungs
+        amount: 0.25
+        conditions:
+        - !type:ReagentCondition
+          reagent: PolypyryliumOligomers
+          min: 30
+
+# tg bungotoxin: a toxin that stops hearts, 7.5 heart damage a unit.
+- type: !PartialOnly reagent
+  id: Bungotoxin
+  ksToxin: { power: 0.7 }
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Heart
+        amount: 1.5
+
+# tg methamphetamine: brain damage. tg's averages 1.26 a second at twice our rate.
+- type: !PartialOnly reagent
+  id: Desoxyephedrine
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.5
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.5
+        conditions:
+        - !type:ReagentCondition
+          reagent: Desoxyephedrine
+          min: 16
+
+# tg impedrezene: brain damage, as its own comments here always meant.
+- type: !PartialOnly reagent
+  id: Impedrezene
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.8
+
+# tg mercury: brain damage.
+- type: !PartialOnly reagent
+  id: Mercury
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.5
+
+# tg lead acetate: a toxin that damages the brain and ears. Ours lasts 30 seconds a unit, so less a second than tg's.
+- type: !PartialOnly reagent
+  id: Lead
+  ksToxin: { power: 0.25 }
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.25
+      - !type:KsAdjustOrganDamage
+        organ: Ears
+        amount: 0.25
+
+# tg happiness: minor brain damage, as its description already says; more from 20u.
+- type: !PartialOnly reagent
+  id: Happiness
+  metabolisms:
+    Bloodstream:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.1
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.25
+        conditions:
+        - !type:ReagentCondition
+          reagent: Happiness
+          min: 20
+
+# tg neurotoxin (the drink): brain damage.
+- type: !PartialOnly reagent
+  id: Neurotoxin
+  metabolisms:
+    Digestion:
+      effects:
+      - !type:KsAdjustOrganDamage
+        organ: Brain
+        amount: 0.5

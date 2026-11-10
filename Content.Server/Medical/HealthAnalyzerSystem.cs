@@ -1,4 +1,5 @@
 using Content.Shared._KS14.PopupLocalization; // KS14
+using Content.Shared._KS14.Klovnmed.OrganHealth; // KS14
 using Content.Server.Medical.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -35,6 +36,7 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
     [Dependency] private TransformSystem _transformSystem = default!;
     [Dependency] private SharedPopupSystem _popupSystem = default!;
     [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+    [Dependency] private KsOrganHealthSystem _organHealth = default!; // KS14: Klovnmed organ health
 
     public override void Initialize()
     {
@@ -256,6 +258,9 @@ public sealed partial class HealthAnalyzerSystem : EntitySystem
             null,
             bleeding,
             unrevivable
-        );
+        )
+        {
+            Organs = _organHealth.GetUnhealthyOrgans(entity), // KS14: Klovnmed organ health
+        };
     }
 }

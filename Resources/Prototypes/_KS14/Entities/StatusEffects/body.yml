@@ -23,3 +23,12 @@
       components:
       - Physics
   - type: WeightlessnessStatusEffect
+
+# Holds off what a failed or missing liver does to the body. See KsOrganHealthSystem.
+- type: entity
+  parent: BloodstreamStatusEffectBase
+  id: StatusEffectKsStableLiver
+  name: stable-liver
+  components:
+  - type: KsStableOrgansStatusEffect
+    organs: [ Liver ]

@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Numerics;
+using Content.Shared._KS14.Klovnmed.OrganHealth; // KS14
 using Content.Shared.Atmos;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
@@ -108,7 +109,7 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
 
         // Alerts
 
-        var showAlerts = state.Unrevivable == true || state.Bleeding == true;
+        var showAlerts = state.Unrevivable == true || state.Bleeding == true || state.Organs is { Count: > 0 }; // KS14: organs
 
         AlertsDivider.Visible = showAlerts;
         AlertsContainer.Visible = showAlerts;
@@ -131,6 +132,29 @@ public sealed partial class HealthAnalyzerControl : BoxContainer
                 Margin = new Thickness(0, 4),
                 MaxWidth = 300
             });
+
+        // KS14 Start: Klovnmed organ health
+        if (state.Organs != null)
+        {
+            foreach (var organ in state.Organs)
+            {
+                var status = organ.Status switch
+                {
+                    KsOrganHealthStatus.Mild => "ks-health-analyzer-organ-mild",
+                    KsOrganHealthStatus.Severe => "ks-health-analyzer-organ-severe",
+                    KsOrganHealthStatus.Failing => "ks-health-analyzer-organ-failing",
+                    _ => "ks-health-analyzer-organ-missing",
+                };
+
+                AlertsContainer.AddChild(new RichTextLabel
+                {
+                    Text = Loc.GetString(status, ("organ", Loc.GetString($"ks-organ-category-{organ.Category}"))),
+                    Margin = new Thickness(0, 4),
+                    MaxWidth = 300
+                });
+            }
+        }
+        // KS14 End
 
         // Damage Groups
 

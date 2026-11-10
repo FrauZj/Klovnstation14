@@ -1,0 +1,176 @@
+# tgstation's recipes, for medicine ported for organ health. How hard each is to make here sets its tier: see
+#     _KS14/Reagents/medicine.yml.
+- type: reaction
+  id: Higadrite
+  reactants:
+    Phenol:
+      amount: 2
+    Lithium:
+      amount: 1
+  products:
+    Higadrite: 3
+
+- type: reaction
+  id: Syriniver
+  reactants:
+    Sulfur:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Toxin:
+      amount: 1
+    NitrousOxide:
+      amount: 2
+  products:
+    Syriniver: 5
+
+- type: reaction
+  id: Inacusiate
+  reactants: # tg's water, carbon and multiver, with dylovene for multiver as in our mindbreaker
+    Water:
+      amount: 1
+    Carbon:
+      amount: 1
+    Dylovene:
+      amount: 1
+  products:
+    Inacusiate: 2
+
+- type: reaction
+  id: Helbital
+  reactants:
+    Sugar:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Carbon:
+      amount: 1
+  products:
+    Helbital: 3
+
+- type: reaction
+  id: Libital
+  reactants:
+    Phenol:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Nitrogen:
+      amount: 1
+  products:
+    Libital: 3
+
+- type: reaction
+  id: SalicylicAcid
+  reactants:
+    Sodium:
+      amount: 1
+    Phenol:
+      amount: 1
+    Carbon:
+      amount: 1
+    Oxygen:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+  products:
+    SalicylicAcid: 5
+
+- type: reaction
+  id: Aiuri
+  reactants:
+    Ammonia:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Hydrogen:
+      amount: 2
+  products:
+    Aiuri: 4
+
+- type: reaction
+  id: Lenturi
+  reactants:
+    Ammonia:
+      amount: 1
+    Silver:
+      amount: 1
+    Sulfur:
+      amount: 1
+    Oxygen:
+      amount: 1
+    Chlorine:
+      amount: 1
+  products:
+    Lenturi: 5
+
+- type: reaction
+  id: Oxandrolone
+  reactants:
+    Carbon:
+      amount: 3
+    Phenol:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Oxandrolone: 6
+
+- type: reaction
+  id: Convermol
+  minTemp: 370
+  reactants:
+    Hydrogen:
+      amount: 1
+    Fluorine:
+      amount: 1
+    Oil:
+      amount: 1
+  products:
+    Convermol: 3
+
+- type: reaction
+  id: Salbutamol
+  reactants: # tg's bromine is chlorine here, the nearest halogen the dispenser has
+    SalicylicAcid:
+      amount: 1
+    Lithium:
+      amount: 1
+    Aluminium:
+      amount: 1
+    Chlorine:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Salbutamol: 5
+
+- type: reaction
+  id: Seiver
+  maxTemp: 320 # tg: a cold recipe, so it won't form from a heated mix
+  reactants:
+    Nitrogen:
+      amount: 1
+    Potassium:
+      amount: 1
+    Aluminium:
+      amount: 1
+  products:
+    Seiver: 3
+
+- type: reaction
+  id: Granibitaluri
+  reactants:
+    TableSalt:
+      amount: 1
+    Carbon:
+      amount: 1
+    SulfuricAcid:
+      amount: 1
+    Iron:
+      amount: 5
+      catalyst: true
+  products:
+    Granibitaluri: 3
