@@ -656,7 +656,7 @@ _popupSystem.PopupEntity(message, dodgerUid, shooterUid, type: PopupType.Small);
 
 So when replacing an obsolete call, keep the audience it had: `PopupPredicted(message, uid, recipient)` showed the popup to everyone and becomes `PopupEntity(message, uid)`, while `PopupClient(message, uid, recipient)` showed it to the recipient alone and becomes `PopupEntity(message, uid, recipient)`.
 
-**Area guides** — NPC behaviour, ranged combat, overlays, lighting, rendering, sprites, shaders, client UI and integration testing each
+**Area guides** — NPC behaviour, ranged combat, overlays, lighting, rendering, sprites, shaders, client UI, organs and medicine, and integration testing each
 have an agent skill under `.claude/skills/` (agents see the list automatically). Read the matching one before working
 in that area. To port an SS13 sprite, run the `/dmi-to-rsi` command: it converts a `.dmi` into an `.rsi`, copyright line included. To port SS13 code or read DM, use the `dreammaker` skill.
 
